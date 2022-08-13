@@ -36,7 +36,7 @@ async def resume_email(text : Text) :
         else:
             freqTable[word] = 1
 
-    sentences = sent_tokenize(text)
+    sentences = sent_tokenize(text.resume)
     sentenceValue = dict()
 
     for sentence in sentences:
@@ -57,5 +57,5 @@ async def resume_email(text : Text) :
     for sentence in sentences:
         if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.2 * average)):
             summary += " " + sentence
+    return summary
 
-    return(summary)
