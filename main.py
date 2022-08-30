@@ -9,6 +9,8 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+    
 class Text(BaseModel):
     resume: str
 
