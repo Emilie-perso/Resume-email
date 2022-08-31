@@ -70,7 +70,7 @@ def read_mail():
     return mail2
 
 
-def resume_email(text : Text) :
+def resume_email(text) :
     # import des librairies  
     import nltk
     from nltk.corpus import stopwords 
@@ -78,7 +78,7 @@ def resume_email(text : Text) :
 
     #Tokeninzing
     stopWords = set(stopwords.words("french"))
-    words = word_tokenize(text.resume)
+    words = word_tokenize(text)
 
     #frequency table
 
@@ -92,7 +92,7 @@ def resume_email(text : Text) :
         else:
             freqTable[word] = 1
 
-    sentences = sent_tokenize(text.resume)
+    sentences = sent_tokenize(text)
     sentenceValue = dict()
 
     for sentence in sentences:
