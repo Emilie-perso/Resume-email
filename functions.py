@@ -6,6 +6,7 @@ import json
 
 from classes import Text
 
+import re
 
 def read_mail():
     # connection au compte outlook
@@ -15,8 +16,8 @@ def read_mail():
     # or check this page: https://www.systoolsgroup.com/imap/
     # for office 365, it's this:
     imap_server = "outlook.office365.com"
-
-
+    global mail 
+    mail= ""
     # create an IMAP4 class with SSL 
     imap = imaplib.IMAP4_SSL(imap_server)
     # authenticate
@@ -47,7 +48,8 @@ def read_mail():
                             pass
                         if content_type == "text/plain" and "attachment" not in content_disposition:
                             # print text/plain emails and skip attachments
-                            print(body)
+                           # print(body)
+                            mail += body
                 else:
                     # extract content type of email
                     content_type = msg.get_content_type()
@@ -55,53 +57,60 @@ def read_mail():
                     body = msg.get_payload(decode=True).decode()
                     if content_type == "text/plain":
                         # print only text email parts
-                        print(body)
+                       # print(body)
+                        mail += body
                 print("="*100)
     # close the connection and logout
     imap.close()
     imap.logout()
+    mail2 = re.sub(r'http\S+', '', mail)
+    mail2 = mail2.replace('\r','')
+    mail2 = mail2.replace('\n','')
+    mail2 = mail2.replace('\u200c','')
+    return mail2
 
-    def resume_email(text : Text) :
-        # import des librairies  
-        import nltk
-        from nltk.corpus import stopwords 
-        from nltk.tokenize import word_tokenize, sent_tokenize
 
-        #Tokeninzing
-        stopWords = set(stopwords.words("french"))
-        words = word_tokenize(text.resume)
+def resume_email(text : Text) :
+    # import des librairies  
+    import nltk
+    from nltk.corpus import stopwords 
+    from nltk.tokenize import word_tokenize, sent_tokenize
 
-        #frequency table
+    #Tokeninzing
+    stopWords = set(stopwords.words("french"))
+    words = word_tokenize(text.resume)
 
-        freqTable = dict()
-        for word in words:
-            word = word.lower()
-            if word in stopWords:
-                continue
-            if word in freqTable:
-                freqTable[word] += 1
-            else:
-                freqTable[word] = 1
+    #frequency table
 
-        sentences = sent_tokenize(text.resume)
-        sentenceValue = dict()
+    freqTable = dict()
+    for word in words:
+        word = word.lower()
+        if word in stopWords:
+            continue
+        if word in freqTable:
+            freqTable[word] += 1
+        else:
+            freqTable[word] = 1
 
-        for sentence in sentences:
-            for word , freq in freqTable.items():
-                if word in sentence.lower():
-                    if sentence in sentenceValue:
-                        sentenceValue[sentence] += freq
-                    else:
-                        sentenceValue[sentence] = freq
+    sentences = sent_tokenize(text.resume)
+    sentenceValue = dict()
 
-        sumValues = 0 
-        for sentence in sentenceValue:
-            sumValues += sentenceValue[sentence]
+    for sentence in sentences:
+        for word , freq in freqTable.items():
+            if word in sentence.lower():
+                if sentence in sentenceValue:
+                    sentenceValue[sentence] += freq
+                else:
+                    sentenceValue[sentence] = freq
 
-        average = int(sumValues / len(sentenceValue))
+    sumValues = 0 
+    for sentence in sentenceValue:
+        sumValues += sentenceValue[sentence]
 
-        summary = ''
-        for sentence in sentences:
-            if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.2 * average)):
-                summary += " " + sentence
-        return summary
+    average = int(sumValues / len(sentenceValue))
+
+    summary = ''
+    for sentence in sentences:
+        if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.2 * average)):
+            summary += " " + sentence
+    return summary
