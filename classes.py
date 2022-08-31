@@ -2,4 +2,4 @@
 from pydantic import BaseModel
 
 class Text(BaseModel):
-   resume: str
+  resume: str
