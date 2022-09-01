@@ -1,7 +1,7 @@
 # Resume-email
 
-L'objectif de ce projet est de résumer les e-mails reçus sur votre boîte mail (outlook uniquement). 
-Il consiste en une API développée en Python avec le framework FastAPI. 
+L'objectif de ce projet est de résumer les e-mails reçus sur votre boîte mail (outlook uniquement).
+Il consiste en une API développée en Python avec le framework FastAPI. Elle fait le résumé global des mails. 
 
 Si jamais vous voulez le tester voici la marche à suivre : 
 
@@ -27,7 +27,7 @@ Lancer l'API avec la commande : uvicorn main:app --reload
 
 ## Etape 5 :
 
-Cliquez sur le lien qui s'affiche et ajouter à la fin /docs pour accéder à Swagger 
+Cliquez sur le lien qui s'affiche et ajouter à la fin /docs pour accéder à Swagger.
 Tester la fonction post en entrant le nombre de mails dont vous souhaitez avoir le résumé.
 Le résumé s'affichera!
 
