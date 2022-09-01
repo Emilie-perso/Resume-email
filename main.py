@@ -10,4 +10,4 @@ from classes import NumberMailToFetch
 async def resume(n: NumberMailToFetch):
     mail = functions.read_mail(n)
     resumed_mail = functions.resume_email(mail)
-    return {'mail': mail,'resumed_mail': resumed_mail}
+    return {'resumed_mail': resumed_mail}
