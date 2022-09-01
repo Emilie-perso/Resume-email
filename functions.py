@@ -3,10 +3,9 @@ import email
 from email.header import decode_header
 import os
 import json 
-
 from classes import Text
-
 import re
+import config as cfg
 
 def clean_text(text):
     cleaned_text = re.sub(r'http\S+', '', text)
@@ -17,8 +16,8 @@ def clean_text(text):
 
 def read_mail():
     # connection au compte outlook
-    username = ""
-    password = ""
+    username = cfg.outlook["username"]
+    password = cfg.outlook["password"]
     # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
     # or check this page: https://www.systoolsgroup.com/imap/
     # for office 365, it's this:
