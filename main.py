@@ -2,13 +2,12 @@
 from fastapi import FastAPI
 import functions
 app = FastAPI()
+from classes import NumberMailToFetch
 
+#@app.get("/")
 
-@app.get("/")
-async def resume():
-    mail = functions.read_mail()
+@app.post("/mails/")
+async def resume(n: NumberMailToFetch):
+    mail = functions.read_mail(n)
     resumed_mail = functions.resume_email(mail)
     return {'mail': mail,'resumed_mail': resumed_mail}
-#@app.post("/")
-#async def test():
-    #return read_mail()

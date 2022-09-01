@@ -1,9 +1,10 @@
 import imaplib
 import email
 from email.header import decode_header
+import numbers
 import os
 import json 
-from classes import Text
+from classes import NumberMailToFetch
 import re
 import config as cfg
 
@@ -14,8 +15,8 @@ def clean_text(text):
     cleaned_text = cleaned_text.replace('\u200c','')
     return cleaned_text
 
-def read_mail():
-    # connection au compte outlook
+def read_mail(n: NumberMailToFetch):
+    # read outlook credentials 
     username = cfg.outlook["username"]
     password = cfg.outlook["password"]
     # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
@@ -23,14 +24,14 @@ def read_mail():
     # for office 365, it's this:
     imap_server = "outlook.office365.com"
     global mail 
-    mail= ""
+    mail = ""
     # create an IMAP4 class with SSL 
     imap = imaplib.IMAP4_SSL(imap_server)
     # authenticate
     imap.login(username, password)
     status, messages = imap.select("INBOX")
-    # number of top emails to fetch
-    N = 3
+    # number of email to fetch 
+    N = n.number
     # total number of emails
     messages = int(messages[0])
     for i in range(messages, messages-N, -1):

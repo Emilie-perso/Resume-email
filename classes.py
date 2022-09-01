@@ -1,5 +1,5 @@
 # import de BaseModel 
 from pydantic import BaseModel
 
-class Text(BaseModel):
-  resume: str
+class NumberMailToFetch(BaseModel):
+  number: int
