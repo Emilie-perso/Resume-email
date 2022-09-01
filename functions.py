@@ -8,6 +8,13 @@ from classes import Text
 
 import re
 
+def clean_text(text):
+    cleaned_text = re.sub(r'http\S+', '', text)
+    cleaned_text = cleaned_text.replace('\r','')
+    cleaned_text = cleaned_text.replace('\n','')
+    cleaned_text = cleaned_text.replace('\u200c','')
+    return cleaned_text
+
 def read_mail():
     # connection au compte outlook
     username = ""
@@ -63,11 +70,8 @@ def read_mail():
     # close the connection and logout
     imap.close()
     imap.logout()
-    mail2 = re.sub(r'http\S+', '', mail)
-    mail2 = mail2.replace('\r','')
-    mail2 = mail2.replace('\n','')
-    mail2 = mail2.replace('\u200c','')
-    return mail2
+    cleaned_mail = clean_text(mail)
+    return cleaned_mail
 
 
 def resume_email(text) :
