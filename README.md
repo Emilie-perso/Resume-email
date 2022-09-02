@@ -31,5 +31,4 @@ Cliquez sur le lien qui s'affiche et ajouter à la fin /docs pour accéder à Sw
 Tester la fonction post en entrant le nombre de mails dont vous souhaitez avoir le résumé.
 Le résumé s'affichera!
 
-Remarque : 
-Le projet est toujours en cours de construction et d'amélioration
+
